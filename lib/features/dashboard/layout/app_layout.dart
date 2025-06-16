@@ -81,25 +81,27 @@ class _AppLayoutState extends State<AppLayout> {
       key: _scaffoldKey,
       appBar: isWebView ? null : _buildMobileAppBar(),
       drawer: isWebView ? null : _buildDrawer(),
-      body: Row(
-        children: [
-          if (isWebView)
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              width: isLargeScreen ? 200 : 60,
-              child: _buildSideMenu(!isLargeScreen),
+      body: SafeArea(
+        child: Row(
+          children: [
+            if (isWebView)
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                width: isLargeScreen ? 200 : 60,
+                child: _buildSideMenu(!isLargeScreen),
+              ),
+            Expanded(
+              child: Column(
+                children: [
+                  if (isWebView) _buildHeader(isLargeScreen: isLargeScreen),
+                  Expanded(
+                    child: _buildPageContent(),
+                  ),
+                ],
+              ),
             ),
-          Expanded(
-            child: Column(
-              children: [
-                if (isWebView) _buildHeader(isLargeScreen: isLargeScreen),
-                Expanded(
-                  child: _buildPageContent(),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -273,75 +275,77 @@ class _AppLayoutState extends State<AppLayout> {
   }
 
   Widget _buildSideMenu(bool isCollapsed) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isCollapsed ? 12 : 16,
-              vertical: 16,
-            ),
-            child: Row(
-              mainAxisAlignment: isCollapsed
-                  ? MainAxisAlignment.center
-                  : MainAxisAlignment.start,
-              children: [
-                Image.asset(
-                  'assets/images/flight.png',
-                  height: 28,
-                ),
-                if (!isCollapsed) ...[
-                  const SizedBox(width: 12),
-                  const Text(
-                    'SkyLog Pro',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: _navigationItems.map((item) {
-                  return _buildMenuItem(
-                    icon: item.icon,
-                    selectedIcon: item.selectedIcon,
-                    title: item.label,
-                    isSelected: _selectedIndex == item.index,
-                    isCollapsed: isCollapsed,
-                    onTap: () => _onItemSelected(item.index),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-          if (!isCollapsed) ...[
-            const Divider(height: 1),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '© 2025 SkyLog Pro Inc.',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 12,
-                ),
-              ),
+    return SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
             ),
           ],
-        ],
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: isCollapsed ? 12 : 16,
+                vertical: 16,
+              ),
+              child: Row(
+                mainAxisAlignment: isCollapsed
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    'assets/images/flight.png',
+                    height: 28,
+                  ),
+                  if (!isCollapsed) ...[
+                    const SizedBox(width: 12),
+                    const Text(
+                      'SkyLog Pro',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: _navigationItems.map((item) {
+                    return _buildMenuItem(
+                      icon: item.icon,
+                      selectedIcon: item.selectedIcon,
+                      title: item.label,
+                      isSelected: _selectedIndex == item.index,
+                      isCollapsed: isCollapsed,
+                      onTap: () => _onItemSelected(item.index),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            if (!isCollapsed) ...[
+              const Divider(height: 1),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  '© 2025 SkyLog Pro Inc.',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

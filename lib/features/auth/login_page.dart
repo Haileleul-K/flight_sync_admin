@@ -152,13 +152,13 @@ class _LoginContent extends StatelessWidget {
     );
   }
 }
-
-class _LoginForm extends StatelessWidget {
-   _LoginForm();
-
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+class _LoginForm extends StatelessWidget {
+   const _LoginForm();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +174,7 @@ class _LoginForm extends StatelessWidget {
         SizedBox(
           height: inputHeight,
           child: TextFormField(
+           // onEditingComplete: () => FocusScopeNode(),
             controller: emailController,
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -203,6 +204,7 @@ class _LoginForm extends StatelessWidget {
                 vertical: 0,
               ),
               isDense: true,
+              
             ),
           ),
         ),

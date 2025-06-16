@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <uses-permission android:name="android.permission.INTERNET"/> <!-- Add this -->
+
     <application
         android:label="Flight Admin"
         android:name="${applicationName}"

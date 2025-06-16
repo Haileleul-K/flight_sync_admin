@@ -69,6 +69,7 @@ class _StatisticsGrid extends StatelessWidget {
     return GridView.count(
       crossAxisCount: screenWidth > 1200 ? 4 : (screenWidth > 800 ? 2 : 1),
       shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       mainAxisSpacing: 16,
       crossAxisSpacing: 16,
       childAspectRatio: 1.5,
