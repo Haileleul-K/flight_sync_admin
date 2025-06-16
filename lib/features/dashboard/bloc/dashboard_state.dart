@@ -53,15 +53,13 @@ class DashboardError extends DashboardState {
 
 class MonthlyTrend {
   final DateTime date;
-  final int commercial;
-  final int cargo;
-  final int training;
+  final int aircfart;
+  final int simulator;
 
   MonthlyTrend({
     required this.date,
-    required this.commercial,
-    required this.cargo,
-    required this.training,
+    required this.aircfart,
+    required this.simulator,
   });
 }
 

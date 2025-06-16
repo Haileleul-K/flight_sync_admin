@@ -313,7 +313,7 @@ class _ChartsSection extends StatelessWidget {
                         .entries
                         .map((e) => FlSpot(
                               e.key.toDouble(),
-                              e.value.commercial.toDouble(),
+                              e.value.aircfart.toDouble(),
                             ))
                         .toList(),
                     isCurved: true,
@@ -325,40 +325,23 @@ class _ChartsSection extends StatelessWidget {
                       color: Colors.blue[400]!.withOpacity(0.1),
                     ),
                   ),
+                 
                   LineChartBarData(
                     spots: state.monthlyTrends
                         .asMap()
                         .entries
                         .map((e) => FlSpot(
                               e.key.toDouble(),
-                              e.value.cargo.toDouble(),
+                              e.value.simulator.toDouble(),
                             ))
                         .toList(),
                     isCurved: true,
-                    color: Colors.orange[400],
+                   color: Colors.orange[400]!,
                     barWidth: 2,
                     dotData: FlDotData(show: false),
                     belowBarData: BarAreaData(
                       show: true,
-                      color: Colors.orange[400]!.withOpacity(0.1),
-                    ),
-                  ),
-                  LineChartBarData(
-                    spots: state.monthlyTrends
-                        .asMap()
-                        .entries
-                        .map((e) => FlSpot(
-                              e.key.toDouble(),
-                              e.value.training.toDouble(),
-                            ))
-                        .toList(),
-                    isCurved: true,
-                    color: Colors.green[400],
-                    barWidth: 2,
-                    dotData: FlDotData(show: false),
-                    belowBarData: BarAreaData(
-                      show: true,
-                      color: Colors.green[400]!.withOpacity(0.1),
+                      color:Colors.orange[400]!.withOpacity(0.1),
                     ),
                   ),
                 ],
@@ -369,11 +352,9 @@ class _ChartsSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _LegendItem(color: Colors.blue[400]!, label: 'Commercial'),
+              _LegendItem(color: Colors.blue[400]!, label: 'Aircraft'),
               const SizedBox(width: 24),
-              _LegendItem(color: Colors.orange[400]!, label: 'Cargo'),
-              const SizedBox(width: 24),
-              _LegendItem(color: Colors.green[400]!, label: 'Training'),
+              _LegendItem(color: Colors.orange[400]!, label: 'Simulator'),
             ],
           ),
         ],

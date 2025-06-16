@@ -27,9 +27,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         10,
         (index) => MonthlyTrend(
           date: DateTime(2024, index + 1),
-          commercial: 70 + (index * 5),
-          cargo: 40 + (index * 3),
-          training: 35 + (index * 2),
+          aircfart: 70 + (index * 5),
+          simulator: 35 + (index * 2),
         ),
       );
      
