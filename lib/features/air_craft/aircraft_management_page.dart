@@ -45,14 +45,14 @@ class _AircraftManagementPageState extends State<AircraftManagementPage> {
               if (value == null || value.isEmpty) {
                 return 'Seats are required';
               }
-              // Validate comma-separated numbers
-              final seats = value.split(',').map((s) => s.trim());
+              // // Validate comma-separated numbers
+              // final seats = value.split(',').map((s) => s.trim());
 
-              for (final seat in seats) {
-                if (int.tryParse(seat) == null) {
-                  return 'Please enter valid numbers separated by commas';
-                }
-              }
+              // for (final seat in seats) {
+              //   if (int.tryParse(seat) == null) {
+              //     return 'Please enter valid numbers separated by commas';
+              //   }
+              // }
               return null;
             },
           ),
