@@ -20,12 +20,14 @@ class AddItemDialog extends StatefulWidget {
   final String title;
   final List<DialogFormField> fields;
   final Function(Map<String, String>) onSubmit;
+  final Widget? customContent;
 
   const AddItemDialog({
     super.key,
     required this.title,
     required this.fields,
     required this.onSubmit,
+    this.customContent,
   });
 
   @override
@@ -152,6 +154,10 @@ class _AddItemDialogState extends State<AddItemDialog> {
                                     ),
                                   ),
                                 )),
+                            if (widget.customContent != null) ...[
+                              const SizedBox(height: 8),
+                              widget.customContent!,
+                            ],
                           ],
                         ),
                       ),

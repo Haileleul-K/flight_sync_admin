@@ -25,53 +25,88 @@ class _AircraftManagementPageState extends State<AircraftManagementPage> {
 
   void _showAddAircraftDialog(BuildContext context) {
     final modelController = TextEditingController();
-    final seatsController = TextEditingController();
+    List<String> selectedSeats = ['Front Seat']; // Default selection
+    final seatOptions = ['Front Seat', 'Back Seat'];
+    String? seatError;
 
     showDialog(
       context: context,
-      builder: (context) => AddItemDialog(
-        title: 'Add Aircraft',
-        fields: [
-          DialogFormField(
-            label: 'Model',
-            placeholder: 'Enter aircraft model',
-            controller: modelController,
-          ),
-          DialogFormField(
-            label: 'Seats',
-            placeholder: 'Enter seat numbers (comma separated)',
-            controller: seatsController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Seats are required';
-              }
-              // // Validate comma-separated numbers
-              // final seats = value.split(',').map((s) => s.trim());
-
-              // for (final seat in seats) {
-              //   if (int.tryParse(seat) == null) {
-              //     return 'Please enter valid numbers separated by commas';
-              //   }
-              // }
-              return null;
-            },
-          ),
-        ],
-        onSubmit: (values) {
-          final seats = values['Seats']!
-              .split(',')
-              .map((s) => int.parse(s.trim().toUpperCase()))
-              .toList();
-
-          context.read<AircraftBloc>().add(
-                AddAircraftModel(
-                  aircraftModel: AircraftModel(
-                    model: values['Model']!,
-                    seats: seats.map((e) => e.toString()).toList(),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AddItemDialog(
+          title: 'Add Aircraft',
+          fields: [
+            DialogFormField(
+              label: 'Model',
+              placeholder: 'Enter aircraft model',
+              controller: modelController,
+            ),
+            DialogFormField(
+              label: 'Seats',
+              placeholder: '',
+              controller: TextEditingController(text: selectedSeats.join(', ')),
+              validator: (_) {
+                if (selectedSeats.isEmpty) {
+                  return 'At least one seat must be selected';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.none,
+            ),
+          ],
+          customContent: Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Select Seats',
+                    style: TextStyle(fontWeight: FontWeight.w500)),
+                ...seatOptions.map((seat) => CheckboxListTile(
+                      title: Text(seat),
+                      value: selectedSeats.contains(seat),
+                      onChanged: (checked) {
+                        setState(() {
+                          if (checked == true) {
+                            selectedSeats.add(seat);
+                          } else {
+                            selectedSeats.remove(seat);
+                          }
+                          // Ensure at least one is selected
+                          if (selectedSeats.isEmpty) {
+                            seatError = 'At least one seat must be selected';
+                          } else {
+                            seatError = null;
+                          }
+                        });
+                      },
+                      controlAffinity: ListTileControlAffinity.leading,
+                    )),
+                if (seatError != null)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, top: 4.0),
+                    child: Text(seatError!,
+                        style:
+                            const TextStyle(color: Colors.red, fontSize: 12)),
                   ),
-                ),
-              );
-        },
+              ],
+            ),
+          ),
+          onSubmit: (values) {
+            if (selectedSeats.isEmpty) {
+              setState(() {
+                seatError = 'At least one seat must be selected';
+              });
+              return;
+            }
+            context.read<AircraftBloc>().add(
+                  AddAircraftModel(
+                    aircraftModel: AircraftModel(
+                      model: values['Model']!,
+                      seats: selectedSeats,
+                    ),
+                  ),
+                );
+          },
+        ),
       ),
     );
   }
