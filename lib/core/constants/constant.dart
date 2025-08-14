@@ -5,7 +5,7 @@ class Constant {
 
   //static String baseURL = "http://192.168.1.12:8000/api"; //home
   //static String baseURL = "http://192.168.0.192:8000/api"; // office
-    static String baseURL = "https://flight-sync.onrender.com/api";  // hots pot
+    static String baseURL = "https://flight-sync-new.onrender.com/api";  // hots pot
 
   static String versionApp = "0.0.1";
 }
